@@ -1,4 +1,4 @@
-class User
+class Profile
   if(ENV['DATABASE_URL'])
     uri = URI.parse(ENV['DATABASE_URL'])
     DB = PG.connect(uri.hostname, uri.port, nil, nil, uri.path[1..-1], uri.user, uri.password)
@@ -8,15 +8,13 @@ class User
   def self.all
     results = DB.exec(
       <<-SQL
-        SELECT *
-        FROM users
+        SELECT user_id, birthday, image, bio
+        FROM profiles
       SQL
     )
     return results.map do |result|
       {
-        'id' => result['id'].to_i,
-        'username' => result['username'],
-        'password' => result['password'],
+        'user_id' => result['user_id'].to_i,
         'birthday' => result['birthday'],
         'image' => result['image'],
         'bio' => result['bio']
@@ -27,64 +25,66 @@ class User
   def self.find(id)
     result = DB.exec(
       <<-SQL
-        SELECT *
-        FROM users
-        WHERE id = #{id}
+        SELECT user_id, birthday, image, bio
+        FROM profiles
+        WHERE user_id = #{id}
       SQL
     )
+    result = results.first
+    return {
+      'user_id' => result['user_id'].to_i,
+      'birthday' => reslt['birthday'],
+      'image' => result['image'],
+      'bio' => result['bio']
+    }
   end
 
   def self.create(opts)
     results = DB.exec(
       <<-SQL
-        INSERT INTO users
-          (username, password, birthday, image, bio)
+        INSERT INTO profiles
+          (user_id, birthday, image, bio)
         VALUES
-          ('#{opts['name']}', '#{opts['password']}', DATE '#{opts['birthday']}', '#{opts['image']}', '#{opts['bio']}')
-        RETURNING id, username, password, birthday, image, bio
+           ('#{opts['user_id']}', '#{opts['birthday']}', '#{opts['image']}', '#{opts['bio']}')
+        RETURNING user_id, birthday, image, bio
       SQL
     )
     result = results.first
     return {
-      'id' => result['id'].to_i,
-      'username' => result['username'],
-      'password' => result['password'],
+      'user_id' => result['user_id'].to_i,
       'birthday' => result['birthday'],
       'image' => result['image'],
       'bio' => result['bio']
     }
   end
 
-  def self.delete(id)
-    restuls = DB.exec(
-      <<-SQL
-        DELETE FROM users WHERE id = #{id}
-      SQL
-    )
-    return {
-      'deleted': true
-    }
-  end
+  # def self.delete(id)
+  #   restuls = DB.exec(
+  #     <<-SQL
+  #       DELETE FROM profiles WHERE id = #{id}
+  #     SQL
+  #   )
+  #   return {
+  #     'deleted': true
+  #   }
+  # end
 
   def self.update(id, opts)
     results = DB.exec(
       <<-SQL
-        UPDATE users
+        UPDATE profiles
         SET
-          username='#{opts['username']}',
-          password='#{opts['password']}',
+
           birthday='#{opts['birthday']}',
           image='#{opts['image']}',
           bio='#{opts['bio']}'
-        WHERE id = #{id}
-        RETURNING id, username, password, birthday, image, bio;
+        WHERE user_id = #{id}
+        RETURNING user_id, birthday, image, bio;
       SQL
     )
     result = results.first
     return {
-      'id' => result['id'].to_i,
-      'username' => result['username'],
-      'password' => result['password'],
+      'user_id' => result['user_id'].to_i,
       'birthday' => result['birthday'],
       'image' => result['image'],
       'bio' => result['bio']

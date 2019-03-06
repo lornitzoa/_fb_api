@@ -16,15 +16,17 @@ Rails.application.routes.draw do
     end
   end
 
-  # get '/users', to: 'users#index'
-  #
-  # get '/users/:id', to: 'users#show'
-  #
-  # post '/users', to: 'users#create'
-  #
-  # delete '/users/:id', to: 'users#delete'
-  #
-  # put '/users/:id', to: 'users#update'
+  #### PROFILE
+
+  get '/profiles', to: 'profiles#index'
+
+  get '/profiles/:id', to: 'profiles#show'
+
+  post '/profiles', to: 'profiles#create'
+
+  delete '/profiles/:id', to: 'profiles#delete'
+
+  put '/profiles/:user_id', to: 'profiles#update'
 
 
   # ------------------------
