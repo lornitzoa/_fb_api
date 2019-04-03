@@ -11,8 +11,6 @@ Rails.application.routes.draw do
   #      AUTHENTICATION      #
   # ------------------------
 
-  get '/', to: 'users#index'
-
   resources :users do
     collection do
 
