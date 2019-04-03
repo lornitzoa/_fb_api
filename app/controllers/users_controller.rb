@@ -45,14 +45,15 @@ class UsersController < ApplicationController
   # LOGIN /users/login
   def login
     puts '======== logging in ==========='
-    user = User.find_by(username: params[:user][:username])
-    puts user
-    if user && user.authenticate(params[:user][:password])
-      token = create_token(user.id, user.username)
-      render json: {status: 200, token: token, user: user}
-    else
-      render json: {status: 401, message: 'unauthorized'}
-    end
+    puts User
+    # user = User.find_by(username: params[:user][:username])
+    # puts user
+    # if user && user.authenticate(params[:user][:password])
+    #   token = create_token(user.id, user.username)
+    #   render json: {status: 200, token: token, user: user}
+    # else
+    #   render json: {status: 401, message: 'unauthorized'}
+    # end
   end
 
   private
