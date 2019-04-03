@@ -45,7 +45,7 @@ class UsersController < ApplicationController
   # LOGIN /users/login
   def login
     puts '======== logging in ==========='
-    puts User.find_by(username: params[:user][:username])
+    puts params
     # user = User.find_by(username: params[:user][:username])
     # puts user
     # if user && user.authenticate(params[:user][:password])
