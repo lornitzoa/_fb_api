@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     puts '============== indexing anna ================'
-    puts User.find_by(username: 'anna')
+    puts User.where(username: 'anna')
     render json: @users
   end
 
