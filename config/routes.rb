@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   # resources :users do
   #   # collection do
 
+      get '/users', to: 'users#index'
+
       post '/users/login', to: 'users#login'
 
       post '/users/register', to: 'users#register'
