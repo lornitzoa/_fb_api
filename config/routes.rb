@@ -11,15 +11,15 @@ Rails.application.routes.draw do
   #      AUTHENTICATION      #
   # ------------------------
 
-  resources :users do
-    collection do
+  # resources :users do
+  #   # collection do
 
-      post '/login', to: 'users#login'
+      post '/users/login', to: 'users#login'
 
-      post '/register', to: 'users#register'
+      post '/users/register', to: 'users#register'
 
-    end
-  end
+  #   end
+  # end
 
 
 

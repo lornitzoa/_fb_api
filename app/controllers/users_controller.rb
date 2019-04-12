@@ -45,7 +45,7 @@ class UsersController < ApplicationController
   # LOGIN /users/login
   def login
     puts '======== logging in ==========='
-    user = User.find_by(username: params[:username])
+    user = User.find_by(username: params[:user][:username])
     puts user
     if user && user.authenticate(params[:user][:password])
       token = create_token(user.id, user.username)
