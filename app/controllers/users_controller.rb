@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.all
+    @users = User.where(username: 'anna')
     puts '============== indexing anna ================'
     puts User.where(username: 'anna')
     render json: @users
