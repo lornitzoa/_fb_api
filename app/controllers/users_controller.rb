@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
-  before_action :authenticate_token, except: [:login, :register]
+  before_action :authenticate_token, except: [:login, :register, :index]
   before_action :authorize_user, except: [:login, :register, :index]
   # before_action :authenticate_user!, except: [:new, :register]
 
